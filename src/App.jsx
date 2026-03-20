@@ -248,47 +248,49 @@ const App = () => {
               </div>
 
               {/* Bridge Action: Recipe */}
-              <div className="glass-panel recipe-section">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="p-2 rounded-lg bg-emerald-500/20 text-emerald-400">
-                    <ChefHat size={28} />
-                  </div>
-                  <h2 className="text-3xl">Sustainability Recipe</h2>
-                </div>
-                
-                <div className="grid md:grid-cols-2 gap-8">
-                  <div>
-                    <h3 className="text-2xl mb-4 text-emerald-400">{results.bridge_action.recipe_name}</h3>
-                    <div className="flex items-center gap-2 text-text-muted mb-6">
-                      <Clock size={18} />
-                      <span>{results.bridge_action.time_estimate}</span>
+              {results.bridge_action && (
+                <div className="glass-panel recipe-section">
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="p-2 rounded-lg bg-emerald-500/20 text-emerald-400">
+                      <ChefHat size={28} />
                     </div>
-                    <ul className="space-y-4">
-                      {results.bridge_action.instructions.map((step, idx) => (
-                        <li key={idx} className="instruction-item">
-                          <span className="instruction-number">
-                            {idx + 1}
+                    <h2 className="text-3xl">Sustainability Recipe</h2>
+                  </div>
+                  
+                  <div className="grid md:grid-cols-2 gap-8">
+                    <div>
+                      <h3 className="text-2xl mb-4 text-emerald-400">{results.bridge_action.recipe_name}</h3>
+                      <div className="flex items-center gap-2 text-text-muted mb-6">
+                        <Clock size={18} />
+                        <span>{results.bridge_action.time_estimate}</span>
+                      </div>
+                      <ul className="space-y-4">
+                        {results.bridge_action.instructions.map((step, idx) => (
+                          <li key={idx} className="instruction-item">
+                            <span className="instruction-number">
+                              {idx + 1}
+                            </span>
+                            <p className="leading-relaxed">{step}</p>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div className="bg-white/5 rounded-2xl p-6 border border-white/5">
+                      <div className="flex items-center gap-2 mb-4 text-primary">
+                        <Package size={20} />
+                        <span className="font-bold uppercase tracking-wider text-sm">Key Ingredients Used</span>
+                      </div>
+                      <div className="flex flex-wrap gap-2">
+                        {results.inventory.map((item, i) => (
+                          <span key={i} className="ingredient-tag">
+                            {item.item}
                           </span>
-                          <p className="leading-relaxed">{step}</p>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div className="bg-white/5 rounded-2xl p-6 border border-white/5">
-                    <div className="flex items-center gap-2 mb-4 text-primary">
-                      <Package size={20} />
-                      <span className="font-bold uppercase tracking-wider text-sm">Key Ingredients Used</span>
-                    </div>
-                    <div className="flex flex-wrap gap-2">
-                      {results.inventory.map((item, i) => (
-                        <span key={i} className="ingredient-tag">
-                          {item.item}
-                        </span>
-                      ))}
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              )}
 
               {/* Missing Staples */}
               <div className="glass-panel p-12 mt-16 mb-20">
@@ -299,19 +301,21 @@ const App = () => {
                   <h2 className="text-4xl font-black">Smart Shopping List</h2>
                 </div>
                 <p className="text-text-muted mb-8 text-lg font-medium">These essentials look low or missing from your bridge:</p>
-                <div className="flex flex-wrap gap-4">
-                  {results.missing_staples.map((staple, idx) => (
-                    <motion.div 
-                      key={idx}
-                      whileHover={{ scale: 1.05 }}
-                      className="ingredient-tag"
-                      style={{ padding: '0.75rem 1.25rem', fontSize: '1.125rem', fontWeight: 'bold' }}
-                    >
-                      <div className="w-3 h-3 rounded-full bg-primary mr-3 shadow-[0_0_8px_rgba(14,165,233,0.5)]" />
-                      {staple}
-                    </motion.div>
-                  ))}
-                </div>
+                {results.missing_staples && (
+                  <div className="flex flex-wrap gap-4">
+                    {results.missing_staples.map((staple, idx) => (
+                      <motion.div 
+                        key={idx}
+                        whileHover={{ scale: 1.05 }}
+                        className="ingredient-tag"
+                        style={{ padding: '0.75rem 1.25rem', fontSize: '1.125rem', fontWeight: 'bold' }}
+                      >
+                        <div className="w-3 h-3 rounded-full bg-primary mr-3 shadow-[0_0_8px_rgba(14,165,233,0.5)]" />
+                        {staple}
+                      </motion.div>
+                    ))}
+                  </div>
+                )}
               </div>
             </motion.div>
           )}
