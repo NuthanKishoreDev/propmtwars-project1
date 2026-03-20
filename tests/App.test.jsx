@@ -1,4 +1,3 @@
-import { getStatusColor } from '../src/lib/utils';
 import { render, screen } from '@testing-library/react'
 import { describe, it, expect, vi } from 'vitest'
 import App from '../src/App'
