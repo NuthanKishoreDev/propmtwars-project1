@@ -10,10 +10,10 @@ Household food waste is a major sustainability issue. Users often:
 
 ## 💡 The Solution
 **FridgeHero** bridges the gap between unstructured visual data and actionable nutrition logic:
-1. **Intelligent Identification**: Uses Gemini Vision to detect items across various containers and states.
-2. **Shelf Life Estimation**: Predicts status (e.g., "Use Soon") to prioritize ingredients.
-3. **Zero-Waste Recipes**: Suggests <15 min recipes using *only* available ingredients.
-4. **Smart Shopping Bridge**: Identifies missing staples to streamline the next store visit.
+1. **Intelligent Identification**: Uses Gemini Vision to detect items across various containers, from open jars to meal prep bins.
+2. **Shelf Life Estimation**: Predicts status (e.g., "Use Soon") using logic-driven status indicators to prioritize ingredients.
+3. **Zero-Waste Recipes**: Suggests <15 min recipes using *only* available ingredients; handles "Empty Fridge" zero-states gracefully.
+4. **Smart Shopping Bridge**: Flags missing staples to automate a smart shopping list.
 
 ---
 
@@ -28,8 +28,20 @@ Household food waste is a major sustainability issue. Users often:
 - **Solution**: Implemented a custom `nginx.conf` using Nginx's template system (`/etc/nginx/templates/default.conf.template`) to automatically inject the dynamic `$PORT` into the configuration at startup.
 
 ### 3. Gemini Model Availability
-- **Problem**: Experimental models like `gemini-3.0-pro` might not be available in all regions/accounts.
-- **Solution**: Configured the application to use `gemini-2.0-flash` by default, but allowed easy model switching via `src/lib/gemini.js` to support the latest flash-preview models.
+- **Problem**: Experimental models might not be stable or available in all regions.
+- **Solution**: Configured the application to use `gemini-1.5-flash` for high-speed, reliable multimodal analysis, while maintaining flexibility for future upgrades.
+
+---
+
+## 🧪 Testing & Quality
+The project includes a comprehensive testing suite using **Vitest** to ensure the reliability of utility logic and data transformations.
+- Run tests: `npm run test`
+
+## ♿ Accessibility
+Built with empathy and inclusion:
+- **Skip Links**: Quick keyboard navigation to main content.
+- **ARIA Roles**: Enhanced screen reader support for all interactive elements and states.
+- **Semantic HTML**: Robust structure for SEO and assistive technologies.
 
 ---
 
