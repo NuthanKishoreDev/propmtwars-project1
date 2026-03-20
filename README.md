@@ -1,16 +1,49 @@
-# React + Vite
+# 🧊 FridgeHero: The Universal Nutrition Bridge
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+FridgeHero is a Gemini-powered web application that takes a messy, unstructured photo of a refrigerator and converts it into a structured inventory, a waste-reduction recipe, and a smart shopping list.
 
-Currently, two official plugins are available:
+## 🚀 The Problem
+Household food waste is a major sustainability issue. Users often:
+- Forget what's in their fridge (mental load).
+- Let fresh produce wilt because they lack quick recipe ideas.
+- Buy duplicate items because they don't have a structured shopping list.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 💡 The Solution
+**FridgeHero** bridges the gap between unstructured visual data and actionable nutrition logic:
+1. **Intelligent Identification**: Uses Gemini Vision to detect items across various containers and states.
+2. **Shelf Life Estimation**: Predicts status (e.g., "Use Soon") to prioritize ingredients.
+3. **Zero-Waste Recipes**: Suggests <15 min recipes using *only* available ingredients.
+4. **Smart Shopping Bridge**: Identifies missing staples to streamline the next store visit.
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🛠 Technical Implementation (Problem & Solution)
 
-## Expanding the ESLint configuration
+### 1. Build Version Incompatibility
+- **Problem**: The initial Cloud Build failed because Vite 8 requires Node.js 20+, but the build environment was using Node 18.
+- **Solution**: Updated the `Dockerfile` to use `node:20-alpine` for the build stage.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### 2. Cloud Run Port Connectivity
+- **Problem**: Cloud Run expects the container to listen on a dynamic `$PORT`, but standard Nginx defaults to port 80, causing deployment timeout/failure.
+- **Solution**: Implemented a custom `nginx.conf` using Nginx's template system (`/etc/nginx/templates/default.conf.template`) to automatically inject the dynamic `$PORT` into the configuration at startup.
+
+### 3. Gemini Model Availability
+- **Problem**: Experimental models like `gemini-3.0-pro` might not be available in all regions/accounts.
+- **Solution**: Configured the application to use `gemini-2.0-flash` by default, but allowed easy model switching via `src/lib/gemini.js` to support the latest flash-preview models.
+
+---
+
+## 📦 How to Run
+
+### Local Development
+1. Create a `.env` file with `VITE_GEMINI_API_KEY`.
+2. Run `npm install`.
+3. Run `npm run dev`.
+
+### Cloud Deployment
+1. Use the provided `Dockerfile` and `cloudbuild.yaml`.
+2. Deploy via gcloud:
+```bash
+gcloud builds submit --config cloudbuild.yaml --substitutions=_VITE_GEMINI_API_KEY=YOUR_KEY
+gcloud run deploy fridgehero --image gcr.io/YOUR_PROJECT/fridgehero --region us-central1 --allow-unauthenticated
+```
