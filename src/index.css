@@ -3,7 +3,7 @@
 :root {
   --primary: #0ea5e9;
   --primary-hover: #0284c7;
-  --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+  --bg-gradient: linear-gradient(135deg, #1e293b 0%, #334155 100%);
   --glass-bg: rgba(255, 255, 255, 0.05);
   --glass-border: rgba(255, 255, 255, 0.1);
   --text-main: #f8fafc;
@@ -128,6 +128,47 @@ h1, h2, h3 {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+}
+
+.ingredient-tag {
+  display: inline-flex;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--glass-border);
+  padding: 0.25rem 0.75rem;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  margin: 0.25rem;
+  white-space: nowrap;
+}
+
+.instruction-item {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.instruction-number {
+  flex-shrink: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: var(--primary);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: bold;
+}
+
+.footer-section {
+  margin-top: 5rem;
+  margin-bottom: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--glass-border);
+  text-align: center;
+  color: var(--text-muted);
 }
 
 /* Animations */
