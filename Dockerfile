@@ -1,9 +1,8 @@
 # Build stage
 FROM node:20-alpine as build-stage
 WORKDIR /app
-ARG VITE_GEMINI_API_KEY
-ENV VITE_GEMINI_API_KEY=$VITE_GEMINI_API_KEY
 COPY . .
+RUN npm install
 RUN npm run build
 
 # Production stage
