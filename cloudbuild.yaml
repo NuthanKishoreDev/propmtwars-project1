@@ -1,18 +1,15 @@
-availableSecrets:
-  secretManager:
-  - versionName: projects/$PROJECT_ID/secrets/VITE_GEMINI_API_KEY/versions/latest
-    env: 'GEMINI_API_KEY'
 steps:
 - name: 'gcr.io/cloud-builders/docker'
-  entrypoint: 'bash'
   args:
-  - '-c'
-  - |
-    docker build --build-arg VITE_GEMINI_API_KEY=$$GEMINI_API_KEY -t gcr.io/$PROJECT_ID/fridgehero .
-  secretEnv: ['GEMINI_API_KEY']
+  - 'build'
+  - '--build-arg'
+  - 'VITE_GEMINI_API_KEY=${_VITE_GEMINI_API_KEY}'
+  - '-t'
+  - 'gcr.io/$PROJECT_ID/fridgehero'
+  - '.'
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   entrypoint: gcloud
-  args: 
+  args:
   - 'run'
   - 'deploy'
   - 'fridgehero'
@@ -25,3 +22,5 @@ steps:
   - '--allow-unauthenticated'
 images:
 - 'gcr.io/$PROJECT_ID/fridgehero'
+substitutions:
+  _VITE_GEMINI_API_KEY: ''
